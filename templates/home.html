@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- ================= Hero ================= -->
+<div class="hero text-center py-5">
+  <h1><i class="bi bi-heart-pulse"></i> Welcome to OBDMS</h1>
+  <p class="lead">
+    A simple platform to connect blood donors with those in need
+  </p>
+
+ {% if not user.is_authenticated %}
+<div class="mt-4">
+  <a href="{% url 'donors:register-donor' %}" class="btn btn-danger btn-lg">
+    Register as Donor
+  </a>
+
+  <a href="{% url 'hospital:register-hospital' %}"
+     class="btn btn-danger btn-lg ms-2">
+    Register Hospital
+  </a>
+  {% endif %}
+
+   {% if user.is_authenticated%}
+  <a href="{% url 'requests:create-request' %}" class="btn btn-dark btn-lg ms-2">
+    Request Blood
+  </a>
+    {% endif %}
+</div>
+
+
+</div>
+
+<!-- ================= Features ================= -->
+<div class="container my-5">
+  <h2 class="text-center mb-4">Why Choose OBDMS?</h2>
+
+  <div class="row g-4">
+
+    <div class="col-md-3">
+      <div class="card shadow-sm h-100 text-center">
+        <div class="card-body">
+          <i class="bi bi-lightning-fill text-danger fs-1"></i>
+          <h5 class="mt-3">Fast Matching</h5>
+          <p>
+            Donors are automatically matched based on blood group and availability.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card shadow-sm h-100 text-center">
+        <div class="card-body">
+          <i class="bi bi-shield-check text-success fs-1"></i>
+          <h5 class="mt-3">Secure</h5>
+          <p>
+            Built using Django’s secure authentication system.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card shadow-sm h-100 text-center">
+        <div class="card-body">
+          <i class="bi bi-bell-fill text-primary fs-1"></i>
+          <h5 class="mt-3">Notifications</h5>
+          <p>
+            Donors receive alerts when matching blood requests are created.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card shadow-sm h-100 text-center">
+        <div class="card-body">
+          <i class="bi bi-people-fill text-warning fs-1"></i>
+          <h5 class="mt-3">Community Driven</h5>
+          <p>
+            Hospitals and donors work together to save lives.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= Quick Links ================= -->
+<div class="container my-5">
+  <div class="card bg-light shadow-sm">
+    <div class="card-body">
+      <h5 class="mb-3">
+        <i class="bi bi-info-circle"></i> Quick Start
+      </h5>
+
+      <ul class="list-group list-group-flush">
+        {% if not user.is_authenticated %}
+        <li class="list-group-item bg-transparent border-0">
+          <a href="{% url 'donors:register-donor' %}">
+            Register as a Donor
+          </a>
+        </li>
+        {% endif %}
+         {% if user.is_authenticated %}
+        <li class="list-group-item bg-transparent border-0">
+          <a href="{% url 'donors:donors-page' %}">
+            Browse Donors
+          </a>
+        </li>
+       
+        <li class="list-group-item bg-transparent border-0">
+          <a href="{% url 'requests:create-request' %}">
+            Request Blood
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

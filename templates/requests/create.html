@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="page-header">
+  <h1><i class="bi bi-droplet-half"></i> Request Blood</h1>
+  <p class="text-muted">
+    Submit a blood request and matching donors will be notified
+  </p>
+</div>
+
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+
+          <!-- 🔔 Messages -->
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="POST" novalidate>
+            {% csrf_token %}
+
+            <!-- Blood Group -->
+            <div class="mb-3">
+              <label class="form-label">Blood Group Needed *</label>
+              <select name="blood_group" class="form-select" required>
+                <option value="">-- Select Blood Group --</option>
+                {% for value, label in blood_groups %}
+                  <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Units -->
+            <div class="mb-4">
+              <label class="form-label">Units Required *</label>
+              <input
+                type="number"
+                name="units_required"
+                min="1"
+                class="form-control"
+                required>
+            </div>
+
+            <!-- City -->
+            <div class="mb-3">
+              <label class="form-label">City *</label>
+              <input
+                type="text"
+                name="city"
+                class="form-control"
+                required>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid">
+              <button type="submit" class="btn btn-danger">
+                <i class="bi bi-check-circle"></i> Submit Blood Request
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

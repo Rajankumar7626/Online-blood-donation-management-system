@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header mb-4">
+  <h1><i class="bi bi-person-heart"></i> Donor Dashboard</h1>
+  <p class="text-muted">
+    Welcome, {{ donor.full_name }}
+  </p>
+</div>
+
+<div class="container">
+
+  <!-- ===== Stats ===== -->
+  <div class="row mb-4">
+
+    <div class="col-md-6">
+      <div class="card shadow-sm text-center">
+        <div class="card-body">
+          <h6>Total Donations</h6>
+          <p class="display-6">{{ donations_count }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card shadow-sm text-center">
+        <div class="card-body">
+          <h6>Completed Donations</h6>
+          <p class="display-6 text-success">{{ completed_donations }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+ 
+  {% if last_donation %}
+  <div class="card mt-4 shadow-sm">
+    <div class="card-body">
+      <h6><i class="bi bi-clock-history"></i> Last Donation</h6>
+
+      <p class="mb-1">
+        <strong>Blood Group:</strong>
+        {{ last_donation.request.blood_group }}
+      </p>
+
+      <p class="mb-1">
+        <strong>Units:</strong>
+        {{ last_donation.units_donated }}
+      </p>
+
+      <p class="mb-1">
+        <strong>Date:</strong>
+        {{ last_donation.created_at|date:"d M Y" }}
+      </p>
+
+      <a href="{% url 'donors:donation-detail' last_donation.id %}"
+         class="btn btn-sm btn-outline-primary mt-2">
+        View Details
+      </a>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- ===== Actions ===== -->
+  <div class="card shadow-sm mt-4">
+    <div class="card-body">
+      <h5 class="mb-3">
+        <i class="bi bi-lightning-fill"></i> Quick Actions
+      </h5>
+
+      <div class="d-flex flex-wrap gap-2">
+        <a href="{% url 'donors:donor-profile' %}" class="btn btn-outline-primary">
+          <i class="bi bi-person"></i> My Profile
+        </a>
+
+        <a href="{% url 'donors:donor-donations' %}" class="btn btn-outline-danger">
+          <i class="bi bi-clock-history"></i> Donation History
+        </a>
+
+        <a href="{% url 'donors:donor-matching-requests' %}" class="btn btn-outline-secondary">
+          <i class="bi bi-arrow-left-right"></i> Blood Requests
+        </a>
+
+        <a href="{% url 'requests:my-requests' %}" class="btn btn-outline-primary">
+          <i class="bi bi-list-check"></i> My Requests
+        </a>
+
+        <a href="{% url 'donors:toggle-availability' %}"
+           class="btn {% if donor.status == 'active' %}btn-outline-danger{% else %}btn-outline-success{% endif %}">
+          {% if donor.status == 'active' %}
+            <i class="bi bi-pause-circle"></i> Mark Inactive
+          {% else %}
+            <i class="bi bi-play-circle"></i> Mark Active
+          {% endif %}
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

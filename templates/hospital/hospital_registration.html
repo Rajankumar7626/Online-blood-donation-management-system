@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="page-header mb-4">
+  <h1><i class="bi bi-hospital-plus"></i> Hospital Registration</h1>
+  <p class="text-muted">Register a hospital in the system</p>
+</div>
+
+<div class="container mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            <!-- 🔔 Messages -->
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            {{ form.non_field_errors }}
+
+            <!-- ================= Hospital Details ================= -->
+            <h5 class="mb-3">Hospital Details</h5>
+            <hr>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                {{ form.hospital_name.label_tag }}
+                {{ form.hospital_name }}
+                {{ form.hospital_name.errors }}
+              </div>
+
+              <div class="col-md-6 mb-3">
+                {{ form.contact_person.label_tag }}
+                {{ form.contact_person }}
+                {{ form.contact_person.errors }}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                {{ form.phone.label_tag }}
+                {{ form.phone }}
+                {{ form.phone.errors }}
+              </div>
+
+              <div class="col-md-6 mb-3">
+                {{ form.category.label_tag }}
+                {{ form.category }}
+                {{ form.category.errors }}
+              </div>
+            </div>
+
+            <!-- ================= Location ================= -->
+            <h5 class="mt-4 mb-3">Location</h5>
+            <hr>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                {{ form.state.label_tag }}
+                {{ form.state }}
+                {{ form.state.errors }}
+              </div>
+
+              <div class="col-md-6 mb-3">
+                {{ form.city.label_tag }}
+                {{ form.city }}
+                {{ form.city.errors }}
+              </div>
+            </div>
+
+            <div class="mb-3">
+              {{ form.address.label_tag }}
+              {{ form.address }}
+              {{ form.address.errors }}
+            </div>
+
+            <!-- ================= Licence ================= -->
+            <h5 class="mt-4 mb-3">Licence</h5>
+            <hr>
+
+            <div class="mb-3">
+              {{ form.licence_number.label_tag }}
+              {{ form.licence_number }}
+              {{ form.licence_number.errors }}
+            </div>
+
+            <!-- ================= Account ================= -->
+            <h5 class="mt-4 mb-3">Account Details</h5>
+            <hr>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Email *</label>
+                <input type="email"
+                       name="email"
+                       class="form-control"
+                       required>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Password *</label>
+                <input type="password"
+                       name="password"
+                       class="form-control"
+                       minlength="8"
+                       required>
+              </div>
+            </div>
+
+            <div class="col-12 text-center mt-4">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-circle"></i> Register Hospital
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
